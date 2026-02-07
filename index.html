@@ -1,15 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Hello World Web アプリケーション">
-  <title>Hello World</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ダニエルズ式（VDOT）でフルマラソンのタイムを予測するアプリケーション">
+    <title>マラソンタイム予測 | VDOT Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <main class="container">
-    <h1 class="title">Hello World</h1>
-  </main>
+    <main class="container">
+        <header class="header">
+            <div class="logo">🏃‍♂️</div>
+            <h1 class="title">マラソンタイム予測</h1>
+            <p class="subtitle">ダニエルズ式 (VDOT) で予測</p>
+        </header>
+
+        <form id="prediction-form" class="form">
+            <div class="input-group">
+                <label class="label">ペース（キロあたり）</label>
+                <div class="pace-inputs">
+                    <div class="input-wrapper">
+                        <input type="number" id="pace-minutes" min="2" max="15" placeholder="5" class="input">
+                        <span class="input-suffix">分</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="pace-seconds" min="0" max="59" placeholder="30" class="input">
+                        <span class="input-suffix">秒</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="label">走行距離</label>
+                <div class="distance-inputs">
+                    <div class="distance-presets">
+                        <button type="button" class="preset-btn" data-distance="5">5K</button>
+                        <button type="button" class="preset-btn" data-distance="10">10K</button>
+                        <button type="button" class="preset-btn" data-distance="21.0975">ハーフ</button>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="distance" min="1" max="50" step="0.1" placeholder="10" class="input">
+                        <span class="input-suffix">km</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="calculate-btn" class="submit-btn">
+                <span>予測する</span>
+                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+        </form>
+
+        <section id="results" class="results">
+            <!-- 結果がここに表示される -->
+        </section>
+
+        <footer class="footer">
+            <p>Jack Daniels' Running Formula に基づく計算</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // プリセットボタンのイベント
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('distance').value = btn.dataset.distance;
+            });
+        });
+    </script>
 </body>
+
 </html>
