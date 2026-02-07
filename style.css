@@ -1,0 +1,78 @@
+/* CSS Reset & Variables */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --gradient-start: #667eea;
+  --gradient-end: #764ba2;
+  --text-color: #ffffff;
+  --shadow-color: rgba(102, 126, 234, 0.4);
+}
+
+/* Body Styling */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+/* Main Container */
+.container {
+  text-align: center;
+  padding: 3rem 4rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px var(--shadow-color);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Title Styling */
+.title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--text-color);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.02em;
+}
+
+/* Fade In Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover Effect */
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -12px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .container {
+    padding: 2rem 2.5rem;
+    margin: 1rem;
+  }
+}
