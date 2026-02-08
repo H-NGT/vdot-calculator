@@ -1,9 +1,15 @@
 /**
  * Service Worker for VDOT Calculator PWA
  * Provides offline functionality through caching
+ * 
+ * Cache Strategy: Network First with Cache Fallback
+ * - Always tries to fetch fresh content from network
+ * - Falls back to cache when offline
+ * - Updates cache with fresh content
  */
 
-const CACHE_NAME = 'vdot-calculator-v1';
+const CACHE_VERSION = 2;
+const CACHE_NAME = `vdot-calculator-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -14,19 +20,19 @@ const ASSETS_TO_CACHE = [
     '/icons/icon-512.png'
 ];
 
-// Install event - cache assets
+// Install event - cache assets and immediately activate
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('Caching app assets');
+                console.log('Caching app assets (v' + CACHE_VERSION + ')');
                 return cache.addAll(ASSETS_TO_CACHE);
             })
             .then(() => self.skipWaiting())
     );
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches and take control
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -42,34 +48,37 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - Network First strategy
 self.addEventListener('fetch', (event) => {
+    // Only handle GET requests
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
     event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                // Return cached version or fetch from network
-                if (response) {
-                    return response;
-                }
-
-                return fetch(event.request).then((networkResponse) => {
-                    // Don't cache non-GET requests or external resources
-                    if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
-                        return networkResponse;
-                    }
-
-                    // Cache the new resource
-                    return caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
+        // Try network first
+        fetch(event.request)
+            .then((networkResponse) => {
+                // If successful, update cache and return response
+                if (networkResponse && networkResponse.status === 200) {
+                    const responseClone = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
                     });
-                });
+                }
+                return networkResponse;
             })
             .catch(() => {
-                // Offline fallback for navigation requests
-                if (event.request.mode === 'navigate') {
-                    return caches.match('/index.html');
-                }
+                // Network failed, try cache
+                return caches.match(event.request).then((cachedResponse) => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+                    // Offline fallback for navigation requests
+                    if (event.request.mode === 'navigate') {
+                        return caches.match('/index.html');
+                    }
+                });
             })
     );
 });
