@@ -1,0 +1,24 @@
+{
+    "name": "VDOT マラソンタイム予測",
+    "short_name": "VDOT計算",
+    "description": "ダニエルズ式（VDOT）でフルマラソンのタイムを予測",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#ff6b35",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
