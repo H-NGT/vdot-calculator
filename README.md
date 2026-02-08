@@ -28,8 +28,9 @@ open index.html
 python3 -m http.server 3000
 ```
 
-### オンライン（予定）
-Vercel にデプロイ後、URL を追加予定
+### オンラインデモ
+
+🌐 **[https://vdot-calculator.vercel.app/](https://vdot-calculator.vercel.app/)**
 
 ## 📐 計算ロジック
 
@@ -72,10 +73,10 @@ vdot-calculator/
 
 ※フレームワーク不使用、完全クライアントサイドで動作
 
-## 📋 開発中の機能
+## ✅ 対応済み機能
 
-- [ ] PWA 対応（オフライン動作、ホーム画面追加）
-- [ ] Vercel デプロイ
+- [x] PWA 対応（オフライン動作、ホーム画面追加）
+- [x] Vercel デプロイ
 
 ## 🤝 コントリビューション
 
