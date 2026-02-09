@@ -28,7 +28,10 @@
 <body>
     <main class="container">
         <header class="header">
-            <div class="logo">🏃‍♂️</div>
+            <div class="header-top">
+                <div class="logo">🏃‍♂️</div>
+                <button id="auth-btn" class="auth-btn">ログイン</button>
+            </div>
             <h1 class="title">マラソンタイム予測</h1>
             <p class="subtitle">ダニエルズ式 (VDOT) で予測</p>
         </header>
@@ -156,6 +159,35 @@
     </main>
 
     <script src="script.js"></script>
+    <script type="module" src="js/auth.js"></script>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2 id="modal-title" class="modal-title">ログイン</h2>
+            <form id="auth-form" class="auth-form">
+                <div class="input-group">
+                    <label class="label">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" class="input" placeholder="example@email.com" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="label">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" class="input" placeholder="********" required>
+                    </div>
+                </div>
+                <button type="submit" id="submit-auth" class="submit-btn">ログイン</button>
+            </form>
+            <p class="auth-switch">
+                <span id="switch-text">アカウントをお持ちでないですか？</span>
+                <a href="#" id="switch-auth" class="auth-link">サインアップ</a>
+            </p>
+            <div id="auth-error" class="error-message"></div>
+        </div>
+    </div>
     <script>
         // プリセットボタンのイベント
         document.querySelectorAll('.preset-btn').forEach(btn => {
